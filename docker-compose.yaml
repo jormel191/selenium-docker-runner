@@ -12,12 +12,13 @@ services:
       - HUB_HOST=hub
   firefox:
     image: selenium/node-firefox:3.14
+    shm_size: '1gb'
     depends_on:
       - hub
     environment:
       - HUB_HOST=hub
   search-module:
-    image: vinsdocker/selenium-docker
+    image: jormel17/selenium-docker
     depends_on:
       - chrome
       - firefox
@@ -27,4 +28,15 @@ services:
       - MODULE=search-module.xml
     volumes:
       - ./search-result:/usr/share/udemy/test-output
+  book-flight-module:
+    image: jormel17/selenium-docker
+    depends_on:
+      - chrome
+      - firefox
+    environment:
+      - BROWSER=chrome
+      - HUB_HOST=HUB
+      - MODULE=book-flight-module.xml    
+    volumes:
+      - ./book-result:/usr/share/udemy/test-output 
 
